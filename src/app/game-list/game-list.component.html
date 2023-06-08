@@ -1,0 +1,71 @@
+<ion-grid>
+  <ion-row>
+    <ion-col size="5">
+      <ion-text color="primary">
+        <h1>Game List</h1>
+      </ion-text>
+    </ion-col>
+    <ion-col size="7" class="ion-text-end">
+      <ion-button color="secondary" (click)="createGame()">
+        <ion-icon name="person-add-outline" src="assets/icons/add-outline.svg"></ion-icon>
+        New Game
+      </ion-button>
+      <ion-button color="danger" (click)="resetGames()">
+        <ion-icon name="person-add-outline" src="assets/icons/add-outline.svg"></ion-icon>
+        Reset Games
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <ion-row>
+              <!--ion-col>#</ion-col-->
+              <ion-col size="2">
+                <ion-icon  color="primary" name="person-outline" src="assets/icons/person-outline.svg"></ion-icon>
+              </ion-col>
+              <ion-col size="2">
+                <ion-icon  color="warning" name="person-outline" src="assets/icons/person-outline.svg"></ion-icon>
+              </ion-col>
+              <ion-col size="2">
+                <ion-icon  color="danger" name="person-outline" src="assets/icons/person-outline.svg"></ion-icon>
+              </ion-col>
+              <ion-col size="2">
+                <ion-icon  color="secondary" name="person-outline" src="assets/icons/person-outline.svg"></ion-icon>
+              </ion-col>
+              <ion-col size="2">Status</ion-col>
+              <ion-col size="2">Actions</ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+        <ion-item *ngFor="let game of games.reverse(); let i = index">
+          <ion-label [ngClass]="getGameStatusClass(game.status)">
+            <ion-row>
+              <!--ion-col>{{ i + 1 }}</ion-col-->
+              <ion-col>{{ game.player1 }}</ion-col>
+              <ion-col>{{ game.player2 }}</ion-col>
+              <ion-col>{{ game.player3 }}</ion-col>
+              <ion-col>{{ game.player4 }}</ion-col>
+              <ion-col>{{ game.status }}</ion-col>
+              <ion-col>
+                <ion-button color="success" shape="round" (click)="startGame(game)" [disabled]="game.status !== 'Not Started'">
+                  <ion-icon slot="icon-only" name="play-circle-outline" src="assets/icons/play-circle-outline.svg"></ion-icon>
+                </ion-button>
+                <ion-button color="danger" shape="round" (click)="finishGame(game)" [disabled]="game.status !== 'In Game'">
+                  <ion-icon slot="icon-only" name="stop-circle-outline" src="assets/icons/stop-circle-outline.svg"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+

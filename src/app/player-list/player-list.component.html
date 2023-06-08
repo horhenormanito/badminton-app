@@ -1,0 +1,54 @@
+<ion-grid>
+  <ion-row>
+    <ion-col size="5">
+      <ion-text color="primary">
+        <h1>Player List</h1>
+      </ion-text>
+    </ion-col>
+    <ion-col size="7" class="ion-text-end">
+      <ion-button color="danger" (click)="resetPlayers()">
+        <ion-icon name="trash-outline" src="assets/icons/trash-outline.svg"></ion-icon>
+        Reset Players
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<ion-grid>
+  <ion-row>
+    <ion-col size="12">
+      <ion-list>
+          <ion-label>
+            <ion-row>
+              <ion-col size="1">#</ion-col>
+              <ion-col size="3">Name</ion-col>
+              <ion-col size="2">Games Played</ion-col>
+              <ion-col size="2">Status</ion-col>
+              <ion-col size="4">Actions</ion-col>
+            </ion-row>
+          </ion-label>
+        <ion-item *ngFor="let player of players; let i = index">
+
+          <ion-label [ngClass]="getPlayerStatusClass(player.status)">
+            <ion-row>
+              <ion-col size="1">{{ i + 1 }}</ion-col>
+              <ion-col size="3">{{ player.name }}</ion-col>
+              <ion-col size="2">{{ player.gamesPlayed }}</ion-col>
+              <ion-col size="2">{{ player.status }}</ion-col>
+              <ion-col size="4">
+                  <ion-button color="danger" (click)="removePlayer(i)">
+                    <ion-icon name="trash-outline" src="assets/icons/trash-outline.svg"></ion-icon>
+                  </ion-button>
+                  <!--ion-button-- *ngIf="player.status === 'Resting'" disabled ion-text-wrap color="warning">{{ player.restTime }}</ion-button-->
+                  <ion-button *ngIf="player.status === 'Resting'" size="small" class="small-button-label" color="warning" (click)="overrideRest(player)">End Rest {{ player.restTime }}</ion-button>
+              </ion-col>
+            </ion-row>
+
+          </ion-label>
+
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+

@@ -1,0 +1,7 @@
+.summary-container {
+  display: flex;
+  justify-content: space-between;
+}
+.summary-item {
+  text-align: center;
+}

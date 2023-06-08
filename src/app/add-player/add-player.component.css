@@ -1,0 +1,20 @@
+
+.small-button-label {
+  text-transform: none;
+  white-space: normal;
+}
+
+.rest-timer {
+  --color: red;
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.input-field {
+  flex: 1;
+  margin-right: 10px;
+}

@@ -1,0 +1,26 @@
+.small-button {
+  --padding-start: 4px;
+  --padding-end: 4px;
+}
+
+.small-button-label {
+  font-size: 12px;
+  text-transform: none;
+  white-space: normal;
+}
+
+.rest-timer {
+  --color: red;
+}
+
+.available-status {
+  background-color: #81D8D0;
+}
+
+.in-game-status {
+  background-color: #FFF380;
+}
+
+.resting-status {
+  background-color: #87CEFA;
+}

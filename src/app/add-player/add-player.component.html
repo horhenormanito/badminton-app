@@ -1,4 +1,4 @@
-<ion-grid>
+<!--ion-grid>
   <ion-card-header>
     <ion-card-title>Add Player</ion-card-title>
   </ion-card-header>
@@ -6,8 +6,8 @@
     <ion-row>
       <ion-col size="12">
         <ion-item lines="none">
-          <ion-input [(ngModel)]="newPlayerName" placeholder="Enter player name"></ion-input>
-          <ion-button size="default" color="primary" slot="end" (click)="addPlayer()">
+          <ion-input [(ngModel)]="newPlayerName" placeholder="Enter player name" class="adjust-font-size"></ion-input>
+          <ion-button size="default" color="primary" slot="end" (click)="addPlayer()" class="adjust-font-size">
             <ion-icon name="person-add-outline" src="assets/icons/person-add-outline.svg"></ion-icon>
             Add Player
           </ion-button>
@@ -15,6 +15,23 @@
       </ion-col>
     </ion-row>
   </ion-card-content>
+</ion-grid-->
+
+<ion-grid>
+  <ion-card-header>
+    <ion-card-title>Add Player</ion-card-title>
+  </ion-card-header>
+  <ion-row>
+    <ion-col size="7">
+      <ion-input [(ngModel)]="newPlayerName" placeholder="Enter player name" class="adjust-font-size"></ion-input>
+    </ion-col>
+    <ion-col size="5">
+      <ion-button size="default" color="primary" (click)="addPlayer()" class="adjust-font-size">
+        <ion-icon name="person-add-outline" src="assets/icons/person-add-outline.svg"></ion-icon>
+        Add Player
+      </ion-button>
+    </ion-col>
+  </ion-row>
 </ion-grid>
 
 

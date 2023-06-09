@@ -85,5 +85,4 @@ export class PlayerListComponent implements OnInit, OnDestroy {
       res.present();
     });
   }
-
 }

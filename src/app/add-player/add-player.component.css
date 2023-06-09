@@ -14,7 +14,107 @@
   justify-content: space-between;
 }
 
-.input-field {
+/*.input-field {
   flex: 1;
   margin-right: 10px;
+}*/
+
+@media screen and (max-width: 576px) {
+  .adjust-font-size {
+    font-size: 12px; /* Adjust the font size as needed */
+    padding: 4px 8px;
+  }
+  .adjust-button-spacing {
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 577px) and (max-width: 768px) {
+  .adjust-font-size {
+    font-size: 14px; /* Adjust the font size as needed */
+    padding: 6px 12px;
+  }
+  .adjust-button-spacing {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .adjust-font-size {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+  .adjust-button-spacing {
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 321px) and (max-width: 568px) {
+  .adjust-font-size {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+  .adjust-button-spacing {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .adjust-font-size {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+  .adjust-button-spacing {
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 376px) and (max-width: 667px) {
+  .adjust-font-size {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+  .adjust-button-spacing {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .adjust-font-size {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+  .adjust-button-spacing {
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 415px) and (max-width: 736px) {
+  .adjust-font-size {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+  .adjust-button-spacing {
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 414px) {
+  .adjust-font-size {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+  .adjust-button-spacing {
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 415px) and (max-width: 896px) {
+  .adjust-font-size {
+    font-size: 12px;
+    padding: 4px 10px;
+  }
+  .adjust-button-spacing {
+    justify-content: flex-start;
+  }
 }

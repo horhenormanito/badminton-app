@@ -53,7 +53,7 @@ export class GameListComponent implements OnInit, OnDestroy {
       // this.playerService.setPlayersAvailable();
       this.gameService.createGame();
     } else {
-      this.unableToCreateGame('There must be exactly 4 available players to create a new game.')
+      this.unableToCreateGame('A minimum of four available players is required to create a new game.')
     }
   }
 

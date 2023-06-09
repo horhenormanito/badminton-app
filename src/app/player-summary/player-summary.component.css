@@ -5,3 +5,8 @@
 .summary-item {
   text-align: center;
 }
+
+.custom-badge {
+  font-size: 1.2rem; /* Increase the font size */
+  padding: 0.6rem 1rem; /* Adjust the padding */
+}

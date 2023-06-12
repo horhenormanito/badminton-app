@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy  } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, ElementRef  } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IonIcon } from '@ionic/angular';
 import { Player } from '../models/player.model';
@@ -13,13 +13,15 @@ import { AlertController } from '@ionic/angular';
 })
 export class PlayerListComponent implements OnInit, OnDestroy {
   players: Player[];
+  isScreenSmall: boolean = false;
   private playerDataChangedSubscription: Subscription | undefined;
 
-  constructor(private playerService: PlayerService, private alertController: AlertController) {
+  constructor(private playerService: PlayerService, private alertController: AlertController, private elementRef: ElementRef) {
     this.players = playerService.players;
   }
 
   ngOnInit(): void {
+    this.checkScreenSize();
     // Subscribe to the playerDataChanged event
     this.playerDataChangedSubscription = this.playerService.playerDataChanged.subscribe(() => {
       // Refresh the player list table or perform any necessary actions
@@ -32,6 +34,16 @@ export class PlayerListComponent implements OnInit, OnDestroy {
     if (this.playerDataChangedSubscription != undefined){
       this.playerDataChangedSubscription.unsubscribe();
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.checkScreenSize();
+  }
+
+  checkScreenSize() {
+    const componentWidth = this.elementRef.nativeElement.offsetWidth;
+    this.isScreenSmall = componentWidth < 500; // Example threshold for small screen size
   }
 
   overrideRest(player: Player) {
@@ -85,4 +97,6 @@ export class PlayerListComponent implements OnInit, OnDestroy {
       res.present();
     });
   }
+
+
 }

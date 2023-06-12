@@ -25,6 +25,10 @@
   background-color: #87CEFA;
 }
 
+.custom-col {
+  padding: 10px; /* Adjust the padding value as needed */
+}
+
 @media screen and (max-width: 576px) {
   .adjust-font-size {
     font-size: 12px; /* Adjust the font size as needed */

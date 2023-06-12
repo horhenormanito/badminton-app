@@ -42,7 +42,7 @@
             <ion-col size="2" class="adjust-font-size">Actions</ion-col>
           </ion-row>
         </ion-label>
-        <ion-item *ngFor="let game of games.reverse(); let i = index">
+        <ion-item *ngFor="let game of games; let i = index">
           <ion-label [ngClass]="getGameStatusClass(game.status)">
             <ion-row>
               <!--ion-col>{{ i + 1 }}</ion-col-->

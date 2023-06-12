@@ -42,7 +42,7 @@ export class GameListComponent implements OnInit, OnDestroy {
     const notStartedGAmes = this.games.filter(game => game.status === 'Not Started');
 
     if (notStartedGAmes.length > 0){
-      alert('Start all pending games before creating new game.');
+      this.unableToCreateGame('Start all pending games before creating new game.');
       return;
     }
 

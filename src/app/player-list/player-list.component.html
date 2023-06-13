@@ -35,10 +35,16 @@
               <ion-col size="2" class="adjust-font-size">{{ player.gamesPlayed }}</ion-col>
               <ion-col size="2" class="adjust-font-size">{{ player.status }}</ion-col>
               <ion-col size="4" class="adjust-font-size custom-col">
-                <ion-button color="danger" (click)="removePlayer(i)" class="adjust-font-size adjust-button-spacing">
-                  <ion-icon name="trash-outline" src="assets/icons/trash-outline.svg"></ion-icon>
+                <ion-button *ngIf="player.status !== 'On Hold'" class="small-button" color="warning" (click)="onholdPlayer(player)" class="adjust-font-size adjust-button-spacing">
+                  <ion-icon name="trash-outline" src="assets/icons/stopwatch-outline.svg"></ion-icon>
                 </ion-button>
-                <ion-button *ngIf="player.status === 'Resting'" size="small" class="small-button-label adjust-font-size adjust-button-spacing" color="warning" (click)="overrideRest(player)">
+                <ion-button *ngIf="player.status === 'On Hold'" class="small-button" color="success" (click)="availPlayer(player)" class="adjust-font-size adjust-button-spacing">
+                  <ion-icon name="trash-outline" src="assets/icons/walk-outline.svg"></ion-icon>
+                </ion-button>
+                <ion-button color="danger" (click)="removePlayer(i)" class="adjust-font-size adjust-button-spacing">
+                  <ion-icon name="trash-outline" src="assets/icons/person-remove-outline.svg"></ion-icon>
+                </ion-button>
+                <ion-button *ngIf="player.status === 'Resting'" size="small" class="small-button-label adjust-font-size adjust-button-spacing" color="tertiary" (click)="overrideRest(player)">
                   End Rest {{ player.restTime }}
                 </ion-button>
               </ion-col>

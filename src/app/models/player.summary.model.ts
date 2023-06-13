@@ -3,4 +3,5 @@ export interface PlayerSummary {
   playersAvailable : number;
   playersInGame : number;
   playersAtRest: number;
+  playersOnHold: number;
 }

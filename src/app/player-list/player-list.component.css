@@ -25,6 +25,10 @@
   background-color: #87CEFA;
 }
 
+.onhold-status {
+  background-color: #C0C0C0;
+}
+
 .custom-col {
   padding: 10px; /* Adjust the padding value as needed */
 }

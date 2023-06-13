@@ -15,7 +15,8 @@ export class PlayerSummaryComponent implements OnInit, OnDestroy {
     playersTotal: 0,
     playersAvailable: 0,
     playersInGame: 0,
-    playersAtRest: 0
+    playersAtRest: 0,
+    playersOnHold: 0
   }; //
 
   private playerDataChangedSubscription: Subscription | undefined;
@@ -45,6 +46,7 @@ export class PlayerSummaryComponent implements OnInit, OnDestroy {
     this.playerSummary.playersAvailable = this.players.filter(p => p.status === 'Available').length;
     this.playerSummary.playersInGame = this.players.filter(p => p.status === 'In Game').length;
     this.playerSummary.playersAtRest = this.players.filter(p => p.status === 'Resting').length;
+    this.playerSummary.playersOnHold = this.players.filter(p => p.status === 'On Hold').length;
 
     const totalPlayers = this.players.length;
     const availablePlayers = this.players.filter(player => player.status === 'Available').length;

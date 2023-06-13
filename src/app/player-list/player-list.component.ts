@@ -46,13 +46,20 @@ export class PlayerListComponent implements OnInit, OnDestroy {
     this.isScreenSmall = componentWidth < 500; // Example threshold for small screen size
   }
 
-  overrideRest(player: Player) {
+  removePlayer(index: number): void {
+    this.removePlayerShowConfirm(index);
+  }
+
+  onholdPlayer(player: Player): void {
+    this.onholdPlayerShowConfirm(player);
+  }
+
+  availPlayer(player: Player): void {
     this.playerService.updatePlayerStatus(player, 'Available');
   }
 
-  removePlayer(index: number): void {
-    this.players.splice(index, 1);
-    this.playerService.savePlayersToStorage();
+  overrideRest(player: Player) {
+    this.playerService.updatePlayerStatus(player, 'Available');
   }
 
   getPlayerStatusClass(status: string): string {
@@ -62,6 +69,8 @@ export class PlayerListComponent implements OnInit, OnDestroy {
       return 'in-game-status';
     } else if (status === 'Resting') {
       return 'resting-status';
+    } else if (status === 'On Hold') {
+      return 'onhold-status';
     }
     return ''; // Default class
   }
@@ -72,6 +81,58 @@ export class PlayerListComponent implements OnInit, OnDestroy {
 
   private refreshPlayerList(): void {
     this.players = this.playerService.players;
+  }
+
+  async onholdPlayerShowConfirm(player : Player) {
+
+    this.alertController.create({
+      header: 'Confirm Alert',
+      subHeader: '',
+      message: 'Are you sure you want to on hold player ' + player.name +'?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.playerService.updatePlayerStatus(player, 'On Hold');
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            // no action
+          }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
+  }
+
+  async removePlayerShowConfirm(index : number) {
+    const playerName = this.players.at(index)?.name;
+
+    this.alertController.create({
+      header: 'Confirm Alert',
+      subHeader: '',
+      message: 'Are you sure you want to delete player ' + playerName +'?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.players.splice(index, 1);
+            this.playerService.savePlayersToStorage();
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            // no action
+          }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
   }
 
   async resetPlayersShowConfirm() {

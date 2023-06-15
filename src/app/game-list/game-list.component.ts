@@ -167,10 +167,10 @@ export class GameListComponent implements OnInit, OnDestroy {
   }
 
   getPaginatedGames(): Game[] {
-    this.games = this.games.reverse();
+    const revertedGames = this.games.reverse();
     const startIndex = (this.gamePagination.currentPage - 1) * this.gamePagination.itemsPerPage;
     const endIndex = startIndex + this.gamePagination.itemsPerPage;
-    return this.games.slice(startIndex, endIndex);
+    return revertedGames.slice(startIndex, endIndex);
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Game } from '../models/game.model';
+import {Game, GamePagination} from '../models/game.model';
 import {GameService } from '../service/game.service';
 import { PlayerService } from '../service/player.service';
 import { AlertController } from '@ionic/angular';
@@ -12,10 +12,13 @@ import { AlertController } from '@ionic/angular';
 })
 export class GameListComponent implements OnInit, OnDestroy {
   games: Game[];
+  gamePagination : GamePagination;
+
   private gamesDataChangedSubscription: Subscription | undefined;
 
   constructor(public gameService: GameService, public playerService: PlayerService, private alertController: AlertController) {
     this.games = gameService.games;
+    this.gamePagination = gameService.gamePagination;
   }
 
   ngOnInit(): void {
@@ -47,11 +50,9 @@ export class GameListComponent implements OnInit, OnDestroy {
     }
 
     if (availablePlayers.length >= 4) {
-      // this.playerService.resetPlayerStatus();
-      // this.playerService.shufflePlayers();
-      // this.playerService.setPlayersInRest();
-      // this.playerService.setPlayersAvailable();
       this.gameService.createGame();
+      // Call updateTotalPages to recalculate the total pages
+      this.updateTotalPages();
     } else {
       this.unableToCreateGame('A minimum of four available players is required to create a new game.')
     }
@@ -75,14 +76,8 @@ export class GameListComponent implements OnInit, OnDestroy {
     this.gameService.finishGame(game);
   }
 
-  async unableToCreateGame(msg : string) {
-    const alert = await this.alertController.create({
-      header: 'Information',
-      message: msg,
-      buttons: ['OK']
-    });
-
-    await alert.present();
+  removeGame(game: Game) {
+    this.removeGameShowConfirm(game);
   }
 
   getGameStatusClass(status: string): string {
@@ -96,6 +91,16 @@ export class GameListComponent implements OnInit, OnDestroy {
 
   resetGames(): void {
     this.resetGamesShowConfirm();
+  }
+
+  async unableToCreateGame(msg : string) {
+    const alert = await this.alertController.create({
+      header: 'Information',
+      message: msg,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   async resetGamesShowConfirm() {
@@ -120,6 +125,52 @@ export class GameListComponent implements OnInit, OnDestroy {
     }).then(res => {
       res.present();
     });
+  }
+
+  async removeGameShowConfirm(game: Game) {
+    this.alertController.create({
+      header: 'Confirm Alert',
+      subHeader: '',
+      message: 'Are you sure you want to remove the game from the game table?',
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            this.gameService.removeGame(game);
+            // Call updateTotalPages to recalculate the total pages
+            this.updateTotalPages();
+          }
+        },
+        {
+          text: 'No',
+          handler: () => {
+            // no action
+          }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
+  }
+
+  /**
+   * Pagination
+   */
+  updateTotalPages() {
+    this.gamePagination.totalPages = Math.ceil(this.games.length / this.gamePagination.itemsPerPage);
+  }
+
+  goToPage(page: number) {
+    if (page >= 1 && page <= this.gamePagination.totalPages) {
+      this.gamePagination.currentPage = page;
+    }
+  }
+
+  getPaginatedGames(): Game[] {
+    this.games = this.games.reverse();
+    const startIndex = (this.gamePagination.currentPage - 1) * this.gamePagination.itemsPerPage;
+    const endIndex = startIndex + this.gamePagination.itemsPerPage;
+    return this.games.slice(startIndex, endIndex);
   }
 
 }

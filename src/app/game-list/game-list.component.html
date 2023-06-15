@@ -42,7 +42,7 @@
             <ion-col size="2" class="adjust-font-size">Actions</ion-col>
           </ion-row>
         </ion-label>
-        <ion-item *ngFor="let game of games; let i = index">
+        <ion-item *ngFor="let game of getPaginatedGames(); let i = index">
           <ion-label [ngClass]="getGameStatusClass(game.status)">
             <ion-row>
               <!--ion-col>{{ i + 1 }}</ion-col-->
@@ -52,11 +52,14 @@
               <ion-col class="adjust-font-size">{{ game.player4 }}</ion-col>
               <ion-col class="adjust-font-size">{{ game.status }}</ion-col>
               <ion-col class="adjust-font-size">
-                <ion-button class="adjust-font-size" color="success" shape="round" (click)="startGame(game)" [disabled]="game.status !== 'Not Started'">
+                <ion-button class="adjust-font-size small-button" color="success" shape="round" (click)="startGame(game)" [disabled]="game.status !== 'Not Started'">
                   <ion-icon slot="icon-only" name="play-circle-outline" src="assets/icons/play-circle-outline.svg"></ion-icon>
                 </ion-button>
-                <ion-button class="adjust-font-size" color="danger" shape="round" (click)="finishGame(game)" [disabled]="game.status !== 'In Game'">
+                <ion-button class="adjust-font-size small-button" color="warning" shape="round" (click)="finishGame(game)" [disabled]="game.status !== 'In Game'">
                   <ion-icon slot="icon-only" name="stop-circle-outline" src="assets/icons/stop-circle-outline.svg"></ion-icon>
+                </ion-button>
+                <ion-button class="adjust-font-size small-button" color="danger" shape="round" (click)="removeGame(game)"  [disabled]="game.status === 'Completed'">
+                  <ion-icon slot="icon-only" name="stop-circle-outline" src="assets/icons/trash-outline.svg"></ion-icon>
                 </ion-button>
               </ion-col>
             </ion-row>
@@ -65,5 +68,27 @@
       </ion-list>
     </ion-col>
   </ion-row>
+  <ion-row>
+    <ion-col size="1">
+      <ion-button class="adjust-font-size small-button" (click)="goToPage(gamePagination.currentPage - 1)" [disabled]="gamePagination.currentPage === 1">
+        <ion-icon name="arrow-back" src="assets/icons/arrow-back-outline.svg"></ion-icon>
+      </ion-button>
+    </ion-col>
+    <ion-col size="5">
+    </ion-col>
+    <ion-col size="4">
+    </ion-col>
+    <ion-col size="1">
+      <div class="adjust-center">
+        <ion-badge class="current-page custom-badge" color="tertiary">{{ gamePagination.currentPage }}</ion-badge>
+      </div>
+    </ion-col>
+    <ion-col size="1">
+      <ion-button class="adjust-font-size small-button" (click)="goToPage(gamePagination.currentPage + 1)" [disabled]="gamePagination.currentPage === gamePagination.totalPages">
+        <ion-icon name="arrow-forward" src="assets/icons/arrow-forward-outline.svg"></ion-icon>
+      </ion-button>
+    </ion-col>
+  </ion-row>
 </ion-grid>
+
 

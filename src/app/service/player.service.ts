@@ -58,6 +58,11 @@ export class PlayerService {
     this.savePlayersToStorage();
   }
 
+  decrementGamesPlayed(player: Player){
+    player.gamesPlayed--;
+    this.savePlayersToStorage();
+  }
+
   setRestStarted(player: Player, isRestStarted: boolean){
     player.isRestStarted = isRestStarted;
     this.savePlayersToStorage();

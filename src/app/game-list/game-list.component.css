@@ -9,6 +9,17 @@
   white-space: normal;
 }
 
+
+.custom-badge {
+  font-size: 1.0rem; /* Increase the font size */
+  padding: 0.3rem 0.6rem; /* Adjust the padding */
+}
+
+.current-page {
+  margin-top: 10px;
+}
+
+
 .in-game-status {
   background-color: #FFF380;
 }

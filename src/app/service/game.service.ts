@@ -1,13 +1,20 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Game } from '../models/game.model';
+import { Game, GamePagination } from '../models/game.model';
 import { PlayerService } from './player.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
-  private storageKey = 'game';
+  private storageGameKey = 'game';
+  private storageGamePaginationKey = 'gamePagination';
   games: Game[] = [];
+  gamePagination : GamePagination = {
+    currentPage:  1,
+    itemsPerPage: 5,
+    totalPages: 0
+  };
+
   gamesDataChanged: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private playerService: PlayerService) {
@@ -15,14 +22,17 @@ export class GameService {
   }
 
   private loadGameListFromStorage(): void {
-    const storedGameList = localStorage.getItem(this.storageKey);
+    const storedGameList = localStorage.getItem(this.storageGameKey);
     if (storedGameList) {
       this.games = JSON.parse(storedGameList);
+      const storedGamePagination = localStorage.getItem(this.storageGamePaginationKey);
+      this.gamePagination = storedGamePagination ? JSON.parse(storedGamePagination) : { currentPage: 1, itemsPerPage: 5, totalPages: 0 };
     }
   }
 
   private saveGameListToStorage(): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(this.games));
+    localStorage.setItem(this.storageGameKey, JSON.stringify(this.games));
+    localStorage.setItem(this.storageGamePaginationKey, JSON.stringify(this.gamePagination));
   }
 
   createGame() {
@@ -78,6 +88,35 @@ export class GameService {
     this.saveGameListToStorage();
   }
 
+  removeGame(game: Game) {
+    const player1 = this.playerService.getPlayerByName(game.player1);
+    const player2 = this.playerService.getPlayerByName(game.player2);
+    const player3 = this.playerService.getPlayerByName(game.player3);
+    const player4 = this.playerService.getPlayerByName(game.player4);
+
+    if (player1 && player2 && player3 && player4) {
+      this.playerService.updatePlayerStatus(player1, 'Available');
+      this.playerService.updatePlayerStatus(player2, 'Available');
+      this.playerService.updatePlayerStatus(player3, 'Available');
+      this.playerService.updatePlayerStatus(player4, 'Available');
+
+      if (game.status === 'In Game'){
+        player1.restEndTime = 0;
+        player2.restEndTime = 0;
+        player3.restEndTime = 0;
+        player4.restEndTime = 0;
+      }
+      this.playerService.savePlayersToStorage();
+    }
+
+    // Remove the game object from the game list
+    const index = this.games.indexOf(game);
+    if (index !== -1) {
+      this.games.splice(index, 1);
+      this.saveGameListToStorage();
+    }
+  }
+
   startRestCountdown() {
     setInterval(() => {
       this.playerService.players.forEach(player => {
@@ -106,7 +145,8 @@ export class GameService {
   }
 
   public removeGamesToStorage(): void {
-    localStorage.removeItem(this.storageKey);
+    localStorage.removeItem(this.storageGameKey);
+    localStorage.removeItem(this.storageGamePaginationKey);
     this.games = [];
     // Emit the event when the player data changes
     this.gamesDataChanged.emit();

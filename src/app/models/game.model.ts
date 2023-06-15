@@ -5,3 +5,9 @@ export interface Game {
   player4: string;
   status: string;
 }
+
+export interface GamePagination {
+  currentPage: number;
+  itemsPerPage: number;
+  totalPages: number;
+}
